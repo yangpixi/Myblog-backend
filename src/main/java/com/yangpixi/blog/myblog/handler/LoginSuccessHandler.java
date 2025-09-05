@@ -14,6 +14,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setCharacterEncoding("utf-8");
+        response.setContentType("application/json");
         response.getWriter().write(JSONObject.toJSONString(RestBean.success("登录成功")));
     }
 }

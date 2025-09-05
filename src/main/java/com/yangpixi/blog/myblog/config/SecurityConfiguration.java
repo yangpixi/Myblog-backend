@@ -10,12 +10,13 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.sql.DataSource;
 
@@ -37,6 +38,17 @@ public class SecurityConfiguration {
                 })
                 .logout(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(conf -> {
+                    CorsConfiguration cors = new CorsConfiguration();
+                    cors.addAllowedOrigin("http://localhost:5173");
+                    cors.setAllowCredentials(true);
+                    cors.addAllowedHeader("*");
+                    cors.addAllowedMethod("*");
+                    cors.addExposedHeader("*");
+                    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                    source.registerCorsConfiguration("/**", cors);
+                    conf.configurationSource(source);
+                })
                 .build();
     }
 
