@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yangpixi.blog.myblog.repository.ArticleMapper">
+    <insert id="insertArticle">
+        insert into t_articles (title, content, created_at, updated_at) values (#{title}, #{content}, #{createdAt}, #{updatedAt})
+    </insert>
+    <update id="updateArticle">
+        update articles
+        set title = #{title}, content = #{content}, updated_at = now()
+        where id = #{id}
+    </update>
+    <delete id="deleteArticle">
+        delete from t_articles where id = #{id}
+    </delete>
+
+    <select id="getArticleById" resultType="com.yangpixi.blog.myblog.entity.Article">
+        select * from t_articles where id = #{id}
+    </select>
+    <select id="getAllArticles" resultType="com.yangpixi.blog.myblog.entity.Article">
+        select * from t_articles
+    </select>
+</mapper>
