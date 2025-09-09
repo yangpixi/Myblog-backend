@@ -20,4 +20,9 @@ public class ArticleController {
     public int creatArticles(@RequestBody Article article) {
         return articleService.createArticle(article);
     }
+
+    @PostMapping("/update")
+    public int updateArticles(@RequestBody Article article) {
+        return articleService.updateArticle(article);
+    }
 }

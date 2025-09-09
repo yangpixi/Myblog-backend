@@ -1,6 +1,8 @@
 package com.yangpixi.blog.myblog.config;
 
 
+import com.yangpixi.blog.myblog.entryPoint.CustomEntryPoint;
+import com.yangpixi.blog.myblog.handler.CustomLogoutSuccessHandler;
 import com.yangpixi.blog.myblog.handler.LoginFailureHandler;
 import com.yangpixi.blog.myblog.handler.LoginSuccessHandler;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
@@ -28,7 +30,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(conf -> {
-                    conf.requestMatchers("/api/auth/login").permitAll();
+                    conf.requestMatchers("/api/auth/login", "/api/currentUser", "/api/logout").permitAll();
                     conf.anyRequest().authenticated();
                 })
                 .formLogin(form -> {
@@ -36,8 +38,13 @@ public class SecurityConfiguration {
                             .successHandler(new LoginSuccessHandler())
                             .failureHandler(new LoginFailureHandler());
                 })
-                .logout(Customizer.withDefaults())
+                .logout(conf ->{
+                    conf.logoutUrl("/api/logout").logoutSuccessHandler(new CustomLogoutSuccessHandler());
+                })
                 .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(ex -> {
+                    ex.authenticationEntryPoint(new CustomEntryPoint());
+                })
                 .cors(conf -> {
                     CorsConfiguration cors = new CorsConfiguration();
                     cors.addAllowedOrigin("http://localhost:5173");
