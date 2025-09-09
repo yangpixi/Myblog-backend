@@ -5,9 +5,9 @@
         insert into t_articles (title, content, updated_at) values (#{title}, #{content}, #{updatedAt})
     </insert>
     <update id="updateArticle">
-        update articles
+        update t_articles
         set title = #{title}, content = #{content}, updated_at = now()
-        where id = #{id}
+        where title = #{title}
     </update>
     <delete id="deleteArticle">
         delete from t_articles where id = #{id}
