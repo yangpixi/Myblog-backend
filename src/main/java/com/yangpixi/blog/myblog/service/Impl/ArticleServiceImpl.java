@@ -32,7 +32,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public int createArticle(Article article) {
-        if (this.getArticleByTitle(article.getTitle()) != null) {
+        if (this.getArticleByTitle(article.getTitle()) == null) {
             return mapper.insertArticle(article);
         } else {
             return 0;
