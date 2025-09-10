@@ -1,13 +1,13 @@
 package com.yangpixi.blog.myblog.controller;
 
 import com.yangpixi.blog.myblog.entity.Article;
+import com.yangpixi.blog.myblog.entity.RestBean;
 import com.yangpixi.blog.myblog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.print.DocFlavor;
 
 @RestController
 @RequestMapping("/api/articles")
@@ -17,12 +17,17 @@ public class ArticleController {
     ArticleService articleService;
 
     @PostMapping("/create")
-    public int creatArticles(@RequestBody Article article) {
-        return articleService.createArticle(article);
+    public RestBean<?> creatArticles(@RequestBody Article article) {
+        return RestBean.success(articleService.createArticle(article));
     }
 
     @PostMapping("/update")
-    public int updateArticles(@RequestBody Article article) {
-        return articleService.updateArticle(article);
+    public RestBean<?> updateArticles(@RequestBody Article article) {
+        return RestBean.success(articleService.updateArticle(article));
+    }
+
+    @GetMapping("/getAll")
+    public RestBean<?> getAllArticles() {
+        return RestBean.success(articleService.getAllArticles());
     }
 }
