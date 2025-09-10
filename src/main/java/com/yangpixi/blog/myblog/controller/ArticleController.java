@@ -18,7 +18,11 @@ public class ArticleController {
 
     @PostMapping("/create")
     public RestBean<?> creatArticles(@RequestBody Article article) {
-        return RestBean.success(articleService.createArticle(article));
+        if (articleService.createArticle(article) == 0) {
+            return RestBean.failure(409, "已存在相同文章");
+        } else {
+            return RestBean.success("创建成功");
+        }
     }
 
     @PostMapping("/update")

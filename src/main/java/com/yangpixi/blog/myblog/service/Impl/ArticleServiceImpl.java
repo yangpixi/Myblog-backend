@@ -1,6 +1,7 @@
 package com.yangpixi.blog.myblog.service.Impl;
 
 import com.yangpixi.blog.myblog.entity.Article;
+import com.yangpixi.blog.myblog.entity.RestBean;
 import com.yangpixi.blog.myblog.repository.ArticleMapper;
 import com.yangpixi.blog.myblog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,22 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Article getArticleByTitle(String title) {
+        return mapper.getArticleByTitle(title);
+    }
+
+    @Override
     public List<Article> getAllArticles() {
         return mapper.getAllArticles();
     }
 
     @Override
     public int createArticle(Article article) {
-        return mapper.insertArticle(article);
+        if (this.getArticleByTitle(article.getTitle()) != null) {
+            return mapper.insertArticle(article);
+        } else {
+            return 0;
+        }
     }
 
     @Override

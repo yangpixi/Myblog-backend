@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper {
     Article getArticleById(int id);
+    Article getArticleByTitle(String title);
     int insertArticle(Article article);
     int updateArticle(Article article);
     int deleteArticle(int id);

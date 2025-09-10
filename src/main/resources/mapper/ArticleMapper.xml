@@ -19,4 +19,7 @@
     <select id="getAllArticles" resultType="com.yangpixi.blog.myblog.entity.Article">
         select * from t_articles
     </select>
+    <select id="getArticleByTitle" resultType="com.yangpixi.blog.myblog.entity.Article">
+        select * from t_articles where title = #{title}
+    </select>
 </mapper>
