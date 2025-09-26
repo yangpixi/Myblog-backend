@@ -12,6 +12,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(conf -> {
-                    conf.requestMatchers("/api/auth/login", "/api/currentUser", "/api/logout").permitAll();
+                    conf.requestMatchers("/api/auth/login", "/api/currentUser", "/api/logout", "/api/articles/getAll", "/api/articles/get/{title}").permitAll();
                     conf.anyRequest().authenticated();
                 })
                 .formLogin(form -> {
@@ -61,7 +62,7 @@ public class SecurityConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        return new PooledDataSource("com.mysql.cj.jdbc.Driver", "jdbc:mysql://localhost:3306/admin", "root", "password");
+        return new PooledDataSource("org.mariadb.jdbc.Driver", "jdbc:mariadb://localhost:3306/blog?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false", "54sh", "sher-admin");
     }
 
 
